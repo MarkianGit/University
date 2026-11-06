@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script> let score = 0;
+
+let questions = [
+    {
+        question: "Які кольори у прапора України?",
+        answers: [
+            "Жовтий і блакитний",
+            "Червоний і зелений",
+            "Чорний і жовтий",
+            "Зелений і фіолетовий"
+        ],
+        correct: 1
+    },
+    {
+        question: "В якому місті знаходиться ДТЕУ?",
+        answers: [
+            "Вінниця",
+            "Київ",
+            "Львів",
+            "Одеса"
+        ],
+        correct: 2
+    },
+    {
+        question: "Скільки буде 5 + 5?",
+        answers: [
+            "8",
+            "10",
+            "15",
+            "20"
+        ],
+        correct: 2
+    },
+    {
+        question: "Яка столиця Франції?",
+        answers: [
+            "Лондон",
+            "Берлін",
+            "Париж",
+            "Рим"
+        ],
+        correct: 3
+    },
+    {
+        question: "Скільки днів має тиждень?",
+        answers: [
+            "5",
+            "6",
+            "7",
+            "8"
+        ],
+        correct: 3
+    }
+];
+
+for (let i = 0; i < questions.length; i++) {
+
+    alert("Current User Score: " + score);
+
+    let question = questions[i];
+
+    let text = "Питання " + (i + 1) + ": " +
+        question.question + "\n\n";
+
+    for (let j = 0; j < question.answers.length; j++) {
+        text += (j + 1) + ". " +
+            question.answers[j] + "\n";
+    }
+
+    let answer = Number(prompt(text));
+
+    if (answer === question.correct) {
+        alert("Correct answer!");
+        score += 100;
+    } else {
+        alert("Wrong Answer!");
+        break;
+    }
+}
+
+alert("Game over!\nYour final score: " + score);
+</script>
+</body>
+</html>
