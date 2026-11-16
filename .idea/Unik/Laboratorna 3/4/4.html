@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    let text = prompt("Введіть текст:");
+    let result = "";
+
+    for (let i = 0; i < text.length; i++) {
+        let position = i + 1;
+
+        if (position % 3 === 0 && position % 5 === 0) {
+            result += "?";
+        } else if (position % 3 === 0) {
+            result += "X";
+        } else if (position % 5 === 0) {
+            result += "9";
+        } else {
+            result += text[i];
+        }
+    }
+
+    alert("Результат: " + result);
+</script>
+</body>
+</html>

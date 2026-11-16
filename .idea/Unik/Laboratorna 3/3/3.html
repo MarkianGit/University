@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    let figure = prompt(
+        "Виберіть фігуру:\n" +
+        "1 - Квадрат\n" +
+        "2 - Круг\n" +
+        "3 - Прямокутник\n" +
+        "4 - Трикутник"
+    );
+
+    let area;
+
+    switch (figure) {
+        case "1":
+            let a = Number(prompt("Введіть сторону квадрата:"));
+            area = a * a;
+            break;
+
+        case "2":
+            let r = Number(prompt("Введіть радіус круга:"));
+            area = Math.PI * r * r;
+            break;
+
+        case "3":
+            let width = Number(prompt("Введіть першу сторону:"));
+            let height = Number(prompt("Введіть другу сторону:"));
+            area = width * height;
+            break;
+
+        case "4":
+            let base = Number(prompt("Введіть основу трикутника:"));
+            let h = Number(prompt("Введіть висоту трикутника:"));
+            area = base * h / 2;
+            break;
+
+        default:
+            alert("Невідома фігура!");
+    }
+
+    if (area !== undefined) {
+        alert("Площа фігури: " + area);
+    }
+</script>
+
+
+</body>
+</html>
