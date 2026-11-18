@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+
+    class Customer {
+        constructor() {
+            this.card = Math.floor(Math.random() * 1000) + 1;
+            this.money = Math.floor(Math.random() * 9001) + 1000;
+            this.bought = 0;
+            this.spent = 0;
+        }
+
+        buy(product) {
+            if (this.money >= product.price && product.quantity > 0) {
+                this.money -= product.price;
+                this.spent += product.price;
+                this.bought++;
+                product.quantity--;
+                return true;
+            }
+            return false;
+        }
+    }
+
+    class Product {
+        constructor(name, price, quantity) {
+            this.name = name;
+            this.price = price;
+            this.quantity = quantity;
+        }
+    }
+
+    class Shop {
+        constructor() {
+            this.profit = 0;
+            this.products = [
+                new Product("Хліб", 30, 20),
+                new Product("Молоко", 50, 15),
+                new Product("Сир", 150, 10),
+                new Product("М'ясо", 300, 8),
+                new Product("Сік", 70, 12)
+            ];
+        }
+
+        sell(customer, product) {
+            if (customer.buy(product)) {
+                this.profit += product.price;
+                return true;
+            }
+            return false;
+        }
+    }
+
+    let count = Number(prompt("Введіть кількість покупців:"));
+
+    if (!Number.isInteger(count) || count <= 0) {
+        console.log("Некоректна кількість покупців");
+    } else {
+        let shop = new Shop();
+        let customers = [];
+
+        for (let i = 0; i < count; i++) {
+            customers.push(new Customer());
+        }
+
+        for (let customer of customers) {
+            console.log("Покупець:", customer.card);
+            console.log("Початкові гроші:", customer.money);
+
+            while (true) {
+                let available = shop.products.filter(product =>
+                    product.quantity > 0 && product.price <= customer.money
+                );
+
+                if (available.length === 0) {
+                    break;
+                }
+
+                let index = Math.floor(Math.random() * available.length);
+                let product = available[index];
+
+                shop.sell(customer, product);
+                console.log("Куплено:", product.name);
+            }
+
+            console.log("Кількість покупок:", customer.bought);
+            console.log("Витрачено:", customer.spent);
+            console.log("Залишок грошей:", customer.money);
+        }
+
+        let maxBought = customers[0];
+        let maxSpent = customers[0];
+
+        for (let customer of customers) {
+            if (customer.bought > maxBought.bought) {
+                maxBought = customer;
+            }
+
+            if (customer.spent > maxSpent.spent) {
+                maxSpent = customer;
+            }
+        }
+
+        console.log("Прибуток магазину:", shop.profit);
+        console.log("Найбільше товарів купив:", maxBought.card);
+        console.log("Кількість товарів:", maxBought.bought);
+        console.log("Найбільше грошей витратив:", maxSpent.card);
+        console.log("Витрачено:", maxSpent.spent);
+    }
+
+</script>
+</body>
+</html>

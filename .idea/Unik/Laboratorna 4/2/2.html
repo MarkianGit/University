@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+
+    class Post {
+        constructor(id, text) {
+            this.id = id;
+            this.date = new Date();
+            this.text = text;
+            this.likes = 0;
+            this.comments = [];
+        }
+
+        addLike() {
+            this.likes++;
+        }
+
+        addComment(user, text) {
+            this.comments.push({
+                author: user.nickname,
+                text: text
+            });
+        }
+
+        show() {
+            console.log("ID:", this.id);
+            console.log("Дата:", this.date.toLocaleString());
+            console.log("Текст:", this.text);
+            console.log("Лайки:", this.likes);
+            console.log("Коментарі:", this.comments);
+        }
+    }
+
+    class User {
+        constructor(name, email, nickname) {
+            this.name = name;
+            this.email = email;
+            this.nickname = nickname;
+            this.posts = [];
+            this.nextPostId = 1;
+        }
+
+        createPost(text) {
+            let post = new Post(this.nextPostId, text);
+            this.posts.push(post);
+            this.nextPostId++;
+            console.log(this.nickname, "створив пост");
+            return post;
+        }
+
+        deletePost(id) {
+            let index = this.posts.findIndex(post => post.id === id);
+
+            if (index !== -1) {
+                this.posts.splice(index, 1);
+                console.log("Пост видалено");
+            } else {
+                console.log("Пост не знайдено");
+            }
+        }
+
+        showLastPosts(user) {
+            console.log("Останні 5 постів користувача:", user.nickname);
+
+            let lastPosts = [...user.posts]
+                .sort((a, b) => b.date - a.date || b.id - a.id)
+                .slice(0, 5);
+
+            for (let post of lastPosts) {
+                post.show();
+            }
+        }
+
+        likePost(user, id) {
+            if (this === user) {
+                console.log("Не можна лайкати власний пост");
+                return;
+            }
+
+            let post = user.posts.find(post => post.id === id);
+
+            if (post) {
+                post.addLike();
+                console.log(this.nickname, "поставив лайк");
+            } else {
+                console.log("Пост не знайдено");
+            }
+        }
+
+        commentPost(user, id, text) {
+            if (this === user) {
+                console.log("Не можна коментувати власний пост");
+                return;
+            }
+
+            let post = user.posts.find(post => post.id === id);
+
+            if (post) {
+                post.addComment(this, text);
+                console.log(this.nickname, "написав коментар");
+            } else {
+                console.log("Пост не знайдено");
+            }
+        }
+    }
+
+    let user1 = new User("Іван", "ivan@gmail.com", "@ivan");
+    let user2 = new User("Марія", "maria@gmail.com", "@maria");
+    let user3 = new User("Олег", "oleg@gmail.com", "@oleg");
+
+    let users = [user1, user2, user3];
+
+    user1.createPost("Мій перший пост!");
+    user1.createPost("Сьогодні гарна погода");
+    user1.createPost("Вивчаю JavaScript");
+    user1.createPost("Люблю програмування");
+    user1.createPost("Всім привіт!");
+    user1.createPost("Новий день!");
+
+    user2.createPost("Привіт усім!");
+    user2.createPost("Мій новий пост");
+
+    user3.createPost("Я теж тут!");
+
+    user2.likePost(user1, 1);
+    user3.likePost(user1, 1);
+    user1.likePost(user2, 1);
+
+    user2.commentPost(user1, 1, "Класний пост!");
+    user3.commentPost(user1, 1, "Підтримую!");
+    user1.commentPost(user2, 1, "Привіт!");
+
+    user2.showLastPosts(user1);
+
+    user1.deletePost(2);
+
+    user2.showLastPosts(user1);
+
+</script>
+</body>
+</html>
