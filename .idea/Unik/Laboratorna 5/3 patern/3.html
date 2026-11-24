@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    class Circle {
+        constructor(radius) {
+            this.radius = radius;
+        }
+
+        accept(visitor) {
+            return visitor.visitCircle(this);
+        }
+    }
+
+    class Rectangle {
+        constructor(width, height) {
+            this.width = width;
+            this.height = height;
+        }
+
+        accept(visitor) {
+            return visitor.visitRectangle(this);
+        }
+    }
+
+    class AreaVisitor {
+        visitCircle(circle) {
+            return Math.PI * circle.radius ** 2;
+        }
+
+        visitRectangle(rectangle) {
+            return rectangle.width * rectangle.height;
+        }
+    }
+
+    let shapes = [
+        new Circle(5),
+        new Rectangle(4, 6)
+    ];
+
+    let visitor = new AreaVisitor();
+
+    for (let shape of shapes) {
+        console.log(
+            "Площа: " + shape.accept(visitor).toFixed(2)
+        );
+    }
+</script>
+</body>
+</html>

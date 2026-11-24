@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    class Warehouse {
+        checkProduct() {
+            console.log("Товар є на складі");
+        }
+    }
+
+    class Payment {
+        pay() {
+            console.log("Оплату здійснено");
+        }
+    }
+
+    class Delivery {
+        send() {
+            console.log("Товар відправлено");
+        }
+    }
+
+    class ShopFacade {
+        constructor() {
+            this.warehouse = new Warehouse();
+            this.payment = new Payment();
+            this.delivery = new Delivery();
+        }
+
+        makeOrder() {
+            this.warehouse.checkProduct();
+            this.payment.pay();
+            this.delivery.send();
+        }
+    }
+
+    let shop = new ShopFacade();
+
+    shop.makeOrder();
+</script>
+</body>
+</html>

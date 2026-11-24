@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    class Settings {
+        static #instance = null;
+
+        constructor() {
+            if (Settings.#instance !== null) {
+                return Settings.#instance;
+            }
+
+            this.language = "Українська";
+            Settings.#instance = this;
+        }
+
+        static getInstance() {
+            if (Settings.#instance === null) {
+                Settings.#instance = new Settings();
+            }
+
+            return Settings.#instance;
+        }
+    }
+
+    let settings1 = Settings.getInstance();
+    let settings2 = Settings.getInstance();
+
+    settings1.language = "English";
+
+    console.log(settings1.language);
+    console.log(settings2.language);
+    console.log(settings1 === settings2);
+</script>
+</body>
+</html>
